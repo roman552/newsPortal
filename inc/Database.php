@@ -12,6 +12,7 @@ class Database {
         $this->user = 'root';
         $this->password = '';
         $this->baseName = 'newsportal';
+        $this->connect();
     }
 
     function __destruct() {
@@ -22,7 +23,7 @@ class Database {
         if(!$this->conn) {
             try {
                 $this->conn = new PDO('mysql:host='.$this->host.';dbname='.$this->
-                baseName.'', $this->user, $this->password, array(PDO::
+                baseName.';port=3307', $this->user, $this->password, array(PDO::
                 MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
             } catch (Exeption $e) {
                 die('Connection failed : ' . $e->get_message());
@@ -40,7 +41,7 @@ class Database {
     function getOne($query) {
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
-        $stmt->setFetchMode(PDO::ASSOC);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $response = $stmt->fetch();
         return $response;
     }
@@ -48,7 +49,7 @@ class Database {
     function getAll($query) {
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
-        $stmt->setFetchMode(PDO::ASSOC);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $response = $stmt->fetchAll();
         return $response;
     }

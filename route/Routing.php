@@ -10,10 +10,10 @@ elseif($path == 'all') {
     $response = Controller::AllNews();
 }
 elseif($path == 'category' and isset($_GET['id'])) {
-    $response = Controller::NewsByCatID();
+    $response = Controller::NewsByCatID($_GET['id']);
 }
 elseif($path == 'news' and isset($_GET['id'])) {
-    $response = Controller::NewsByID();
+    $response = Controller::NewsByID($_GET['id']);
 }
 
 else {
